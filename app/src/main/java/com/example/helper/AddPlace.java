@@ -85,10 +85,12 @@ public class AddPlace extends AppCompatActivity implements ValueEventListener {
 
 
         dbRef = FirebaseDatabase.getInstance().getReference(PLAYS);
-
-
     }
 
+    public void addBaseData(){
+        String id = dbRef.getKey();
+
+    }
 
     @Override
     public void onDataChange(@NonNull DataSnapshot snapshot) {

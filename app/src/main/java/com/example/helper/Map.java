@@ -60,7 +60,7 @@ public class Map extends FragmentActivity implements OnMapReadyCallback {
         mMap.moveCamera(CameraUpdateFactory.newLatLng(myPlace));
         CameraPosition cameraPosition = new CameraPosition(myPlace, 23, 0, 15);
         mMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(10));
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(11));
 
 //        mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
 //            @Override
