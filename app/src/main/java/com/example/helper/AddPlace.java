@@ -29,7 +29,7 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 
 public class AddPlace extends AppCompatActivity implements ValueEventListener {
-    Button place, photo, gallery, makePhoto;
+    Button place, photo, gallery, makePhoto, myPoint, drPoint;
     FloatingActionButton save;
     EditText news;
     Uri mUri;
@@ -52,10 +52,39 @@ public class AddPlace extends AppCompatActivity implements ValueEventListener {
         image = findViewById(R.id.image);
         save = findViewById(R.id.save);
         Dialog dialog = new Dialog(AddPlace.this);
+        Dialog dialogPoint = new Dialog(AddPlace.this);
 
+        dialogPoint.setContentView(R.layout.choose_location);
         dialog.setContentView(R.layout.camera);
+
+        myPoint = dialogPoint.findViewById(R.id.myPoint);
+        drPoint = dialogPoint.findViewById(R.id.drPoint);
+
         makePhoto = dialog.findViewById(R.id.camera);
         gallery = dialog.findViewById(R.id.gallery);
+
+        place.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialogPoint.show();
+            }
+        });
+
+        //TODO добавить геолокацию моего местоположения
+        myPoint.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialogPoint.dismiss();
+            }
+        });
+
+        //TODO добавить геолокация через точку на карте
+        drPoint.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialogPoint.dismiss();
+            }
+        });
 
         photo.setOnClickListener(new View.OnClickListener() {
             @Override
