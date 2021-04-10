@@ -31,8 +31,8 @@
         <activity
             android:name=".Map"
             android:label="@string/title_activity_map" />
-        <activity android:name=".MainActivity" />
-        <activity android:name=".Menu">
+        <activity android:name=".AddPlace" />
+        <activity android:name=".StartActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
