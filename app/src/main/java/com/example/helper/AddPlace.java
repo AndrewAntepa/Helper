@@ -42,7 +42,7 @@ public class AddPlace extends AppCompatActivity {
     private final int Pick = 1;
 
     DatabaseReference dbRef;
-    public static final String PLAY = "play";
+    public static final String PLACE = "place";
     LocationManager locationManager;
     Location location;
     LocationListener locationListener;
@@ -130,7 +130,7 @@ public class AddPlace extends AppCompatActivity {
         });
 
 
-        dbRef = FirebaseDatabase.getInstance().getReference(PLAY);
+        dbRef = FirebaseDatabase.getInstance().getReference(PLACE);
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
