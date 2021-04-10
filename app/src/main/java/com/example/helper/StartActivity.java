@@ -91,17 +91,17 @@ public class StartActivity extends AppCompatActivity {
             }
         });
 
-        plays = new LinkedList<>();
-        plays.add(new Place("Снести здание", 52.2562, 104.2650));
-        plays.add(new Place("Убрать мусор", 52.2258, 104.3226));
-        plays.add(new Place("Убрать мусор", 52.2507, 104.3458));
-        plays.add(new Place("Убрать мусор", 52.2808, 104.2732));
-        for (int i = 0; i < plays.size(); i++) {
-            ContentValues contentValues = new ContentValues();
-            contentValues.put(MyOpenHelper.COLUMN_NAME, plays.get(i).name);
-            contentValues.put(MyOpenHelper.COLUMN_LAT, plays.get(i).lat);
-            contentValues.put(MyOpenHelper.COLUMN_LON, plays.get(i).lon);
-            sdb.insert(MyOpenHelper.TABLE_NAME, null, contentValues);
-        }
+//        plays = new LinkedList<>();
+//        plays.add(new Place("Снести здание", 52.2562, 104.2650));
+//        plays.add(new Place("Убрать мусор", 52.2258, 104.3226));
+//        plays.add(new Place("Убрать мусор", 52.2507, 104.3458));
+//        plays.add(new Place("Убрать мусор", 52.2808, 104.2732));
+//        for (int i = 0; i < plays.size(); i++) {
+//            ContentValues contentValues = new ContentValues();
+//            contentValues.put(MyOpenHelper.COLUMN_NAME, plays.get(i).name);
+//            contentValues.put(MyOpenHelper.COLUMN_LAT, plays.get(i).lat);
+//            contentValues.put(MyOpenHelper.COLUMN_LON, plays.get(i).lon);
+//            sdb.insert(MyOpenHelper.TABLE_NAME, null, contentValues);
+//        }
     }
 }

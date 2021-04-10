@@ -3,14 +3,18 @@ package com.example.helper;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.Manifest;
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.location.Location;
+import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
@@ -19,6 +23,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
@@ -31,6 +36,7 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 
 public class AddPlace extends AppCompatActivity {
+    private final int LOCATION_PERMISSION = 1001;
     Button place, photo, gallery, makePhoto, myPoint, drPoint;
     FloatingActionButton save;
     EditText news;
@@ -43,6 +49,8 @@ public class AddPlace extends AppCompatActivity {
     public static final String PLAYS = "plays";
     LocationManager locationManager;
     Location location;
+    LocationListener locationListener;
+    private boolean granted = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,7 +137,44 @@ public class AddPlace extends AppCompatActivity {
         });
     }
 
-//    @Override
+    //TODO добавление в firebase
+    private boolean checkPermission(){
+        //относится к опасным разрешениям, требует запроса. Функция вторична - не сразу
+        //объяснить зачем разрешение, запрос только из активностей или фрагментов
+        if (ActivityCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_COARSE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+            //что делать, если разрешение не дано: попробовать запросить повторно
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                    LOCATION_PERMISSION);
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == LOCATION_PERMISSION) {
+            granted = true;
+            if (grantResults.length > 0) {
+                for (int res : grantResults) {
+                    if (res != PackageManager.PERMISSION_GRANTED) {
+                        Toast.makeText(this, "Access denied", Toast.LENGTH_SHORT).show();
+                        granted = false;
+                    }
+                }
+            } else {
+                Toast.makeText(this, "Access denied", Toast.LENGTH_SHORT).show();
+                granted = false;
+            }
+        }
+    }
+    //    @Override
 //    public void onDataChange(@NonNull DataSnapshot snapshot) {
 //
 //    }
