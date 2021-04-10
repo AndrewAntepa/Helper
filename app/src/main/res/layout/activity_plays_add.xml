@@ -23,6 +23,7 @@
                     android:backgroundTint="#22ABE2"
                     android:layout_weight="1"
                     android:layout_marginLeft="10dp"
+                    android:textColor="@color/white"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
                     android:text="+МЕСТО"
@@ -67,6 +68,7 @@
         android:layout_gravity="bottom|center_horizontal"
         android:layout_margin="15dp"
         android:src="@drawable/save"
+        app:tint="@color/white"
         android:id="@+id/save"/>
 
     <FrameLayout
