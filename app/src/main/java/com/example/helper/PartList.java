@@ -29,6 +29,12 @@ public class PartList extends AppCompatActivity {
 
         execute.setOnClickListener(new View.OnClickListener() {
             @Override
+            public void onClick(View v) {
+
+            }
+        });
+        execute.setOnClickListener(new View.OnClickListener() {
+            @Override
             public void onClick(View view) {
                 Intent intent = new Intent(PartList.this, StartActivity.class);
                 stat = 1;

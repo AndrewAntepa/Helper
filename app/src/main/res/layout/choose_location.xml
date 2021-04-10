@@ -9,10 +9,12 @@
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:text="мое местоположение"
+        android:backgroundTint="#22ABE2"
         android:id="@+id/myPoint"/>
     <Button
         android:layout_width="300dp"
         android:layout_height="wrap_content"
+        android:backgroundTint="#22ABE2"
         android:text="на карте"
         android:id="@+id/drPoint"/>
 
