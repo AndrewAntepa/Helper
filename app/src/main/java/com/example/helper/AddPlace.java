@@ -1,11 +1,18 @@
 package com.example.helper;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.app.Dialog;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,11 +25,17 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+
 public class AddPlace extends AppCompatActivity implements ValueEventListener {
-    Button place, photo;
+    Button place, photo, gallery, makePhoto;
     FloatingActionButton save;
     EditText news;
+    Uri mUri;
     ImageView image;
+    private static final int CODE = 100;
+    private final int Pick = 1;
 
     DatabaseReference dbRef;
     String PLAYS = "plays";
@@ -38,17 +51,44 @@ public class AddPlace extends AppCompatActivity implements ValueEventListener {
         news = findViewById(R.id.news);
         image = findViewById(R.id.image);
         save = findViewById(R.id.save);
+        Dialog dialog = new Dialog(AddPlace.this);
 
-        dbRef = FirebaseDatabase.getInstance().getReference(PLAYS);
+        dialog.setContentView(R.layout.camera);
+        makePhoto = dialog.findViewById(R.id.camera);
+        gallery = dialog.findViewById(R.id.gallery);
+
         photo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                dialog.show();
+            }
+        });
+        makePhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, mUri);
+                startActivityForResult(intent, CODE);
+                dialog.dismiss();
+            }
+        });
 
+        gallery.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_PICK);
+                intent.setType("image/*");
+                startActivityForResult(intent, Pick);
+                dialog.dismiss();
             }
         });
 
 
+        dbRef = FirebaseDatabase.getInstance().getReference(PLAYS);
+
+
     }
+
 
     @Override
     public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -60,14 +100,27 @@ public class AddPlace extends AppCompatActivity implements ValueEventListener {
 
     }
 
-
-   /* @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+    //TODO добавление фото через галлерею и камеру
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == CODE && resultCode == RESULT_OK) {
+        if (requestCode == CODE) {
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
             image.setImageBitmap(imageBitmap);
+            switch (requestCode) {
+                case Pick:
+                    try {
+                        final Uri imageUri = data.getData();
+                        final InputStream imageStream = getContentResolver().openInputStream(imageUri);
+                        final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
+                        image.setImageBitmap(selectedImage);
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                    break;
+            }
+        }
         switch (requestCode) {
             case Pick:
                 if (resultCode == RESULT_OK) {
@@ -80,9 +133,7 @@ public class AddPlace extends AppCompatActivity implements ValueEventListener {
                         e.printStackTrace();
                     }
                 }
-                break;
-
-        }*/
+        }
+    }
 }
-
 
