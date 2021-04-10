@@ -57,7 +57,15 @@ public class AddPlace extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_plays_add);
 
+        locationListener = new LocationListener() {
+            @Override
+            public void onLocationChanged(@NonNull Location location) {
+
+            }
+        };
+
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+//        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000*10, 5, locationListener);
 
         place = findViewById(R.id.place);
         photo = findViewById(R.id.photo);
@@ -219,5 +227,7 @@ public class AddPlace extends AppCompatActivity {
                 }
         }
     }
+
+
 }
 
