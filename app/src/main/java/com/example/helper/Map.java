@@ -16,8 +16,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 public class Map extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
-    LocationManager locationManager;
-    Location location;
+    private double latitude = 0, longitude = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
