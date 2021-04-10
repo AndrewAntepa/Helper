@@ -10,7 +10,7 @@
   <com.google.android.material.floatingactionbutton.FloatingActionButton
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:backgroundTint="#22ABE2"
+      android:backgroundTint="#0742D6"
       android:layout_gravity="bottom|center_horizontal"
       android:layout_margin="15dp"
       android:src="@drawable/plus"
@@ -28,7 +28,7 @@
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:layout_width="wrap_content"
-        android:backgroundTint="#22ABE2"
+        android:backgroundTint="#0742D6"
         android:layout_weight="1"
         android:layout_margin="10dp"
         android:gravity="center"
@@ -41,7 +41,7 @@
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:layout_width="wrap_content"
         android:text="hses"
-        android:backgroundTint="#22ABE2"
+        android:backgroundTint="#0742D6"
         android:layout_weight="1"
         android:textColor="@color/white"
         android:layout_marginRight="10dp"
