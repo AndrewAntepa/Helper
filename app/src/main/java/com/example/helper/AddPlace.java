@@ -1,5 +1,6 @@
 package com.example.helper;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -11,15 +12,20 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
-public class AddPlace extends AppCompatActivity {
+public class AddPlace extends AppCompatActivity implements ValueEventListener {
     Button place, photo;
     FloatingActionButton save;
     EditText news;
     ImageView image;
 
-    CamGal camGal;
-    FragmentManager fragmentManager;
+    DatabaseReference dbRef;
+    String PLAYS = "plays";
 
 
     @Override
@@ -32,18 +38,25 @@ public class AddPlace extends AppCompatActivity {
         news = findViewById(R.id.news);
         image = findViewById(R.id.image);
         save = findViewById(R.id.save);
-        camGal = new CamGal();
-        fragmentManager = getSupportFragmentManager();
 
+        dbRef = FirebaseDatabase.getInstance().getReference(PLAYS);
         photo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.conteiner, camGal);
-                fragmentTransaction.commit();
+
             }
         });
 
+
+    }
+
+    @Override
+    public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+    }
+
+    @Override
+    public void onCancelled(@NonNull DatabaseError error) {
 
     }
 
