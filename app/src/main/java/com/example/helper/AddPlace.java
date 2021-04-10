@@ -10,6 +10,8 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.location.Location;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -28,7 +30,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 
-public class AddPlace extends AppCompatActivity implements ValueEventListener {
+public class AddPlace extends AppCompatActivity {
     Button place, photo, gallery, makePhoto, myPoint, drPoint;
     FloatingActionButton save;
     EditText news;
@@ -38,13 +40,16 @@ public class AddPlace extends AppCompatActivity implements ValueEventListener {
     private final int Pick = 1;
 
     DatabaseReference dbRef;
-    String PLAYS = "plays";
-
+    public static final String PLAYS = "plays";
+    LocationManager locationManager;
+    Location location;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_plays_add);
+
+        locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 
         place = findViewById(R.id.place);
         photo = findViewById(R.id.photo);
@@ -114,22 +119,25 @@ public class AddPlace extends AppCompatActivity implements ValueEventListener {
 
 
         dbRef = FirebaseDatabase.getInstance().getReference(PLAYS);
+        save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String id = dbRef.getKey();
+                Place place = new Place(id, news.getText().toString(), Double.parseDouble(String.valueOf(location.getLatitude())), Double.parseDouble(String.valueOf(location.getLongitude())));
+                dbRef.push().setValue(place);
+            }
+        });
     }
 
-    public void addBaseData(){
-        String id = dbRef.getKey();
-
-    }
-
-    @Override
-    public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-    }
-
-    @Override
-    public void onCancelled(@NonNull DatabaseError error) {
-
-    }
+//    @Override
+//    public void onDataChange(@NonNull DataSnapshot snapshot) {
+//
+//    }
+//
+//    @Override
+//    public void onCancelled(@NonNull DatabaseError error) {
+//
+//    }
 
     //TODO добавление фото через галлерею и камеру
     @Override
