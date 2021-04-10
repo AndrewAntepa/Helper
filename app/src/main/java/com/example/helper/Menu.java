@@ -15,7 +15,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class Menu extends AppCompatActivity {
     ListView list;
-    ExtendedFloatingActionButton mapButton, lentaButton;
+    ExtendedFloatingActionButton mapButton, balls;
     FloatingActionButton addButton;
     SimpleAdapter simpleAdapter;
     Intent intentNew;
@@ -26,18 +26,10 @@ public class Menu extends AppCompatActivity {
         setContentView(R.layout.activity_menu);
 
         mapButton = findViewById(R.id.mapButton);
-        lentaButton = findViewById(R.id.lentaButton);
         addButton = findViewById(R.id.addButton);
         list = findViewById(R.id.list);
+        balls = findViewById(R.id.balls);
         intentNew = new Intent(Menu.this, MainActivity.class);
-
-        lentaButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(getApplicationContext(), "Good", Toast.LENGTH_SHORT).show();
-
-            }
-        });
 
         mapButton.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -64,4 +64,10 @@
         android:layout_margin="15dp"
         android:src="@drawable/save"
         android:id="@+id/save"/>
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/conteiner"
+        android:layout_gravity="center"/>
 </FrameLayout>

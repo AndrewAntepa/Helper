@@ -24,7 +24,7 @@ import java.util.Locale;
 public class Map extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
-    private double latitude = 0, longitude = 0;
+    private double latitude = 52.27537, longitude = 104.2774;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,33 +56,33 @@ public class Map extends FragmentActivity implements OnMapReadyCallback {
         // Add a marker in Sydney and move the camera
         //LatLng sydney = new LatLng(-34, 151);
         LatLng myPlace = new LatLng(latitude, longitude);
-        mMap.addMarker(new MarkerOptions().position(myPlace).title("I am here"));
+//        mMap.addMarker(new MarkerOptions().position(myPlace).title("I am here"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(myPlace));
         CameraPosition cameraPosition = new CameraPosition(myPlace, 23, 0, 15);
         mMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(10));
 
-        mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
-            @Override
-            public void onMapClick(LatLng latLng) {
-                Geocoder geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
-                String adress = "";
-                List<Address> adresses = null;
-                try {
-                    adresses = geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                if (adresses == null || adresses.size() == 0){
-                    adress = "Адрес неопределен";
-                }else {
-                    for (int i = 0; i < adresses.get(0).getMaxAddressLineIndex(); i++) {
-                        adress += adresses.get(0).getAddressLine(i);
-                    }
-
-                }
-                mMap.addMarker(new MarkerOptions().position(latLng).title(adress));
-            }
-        });
+//        mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+//            @Override
+//            public void onMapClick(LatLng latLng) {
+//                Geocoder geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
+//                String adress = "";
+//                List<Address> adresses = null;
+//                try {
+//                    adresses = geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1);
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//                if (adresses == null || adresses.size() == 0){
+//                    adress = "Адрес неопределен";
+//                }else {
+//                    for (int i = 0; i < adresses.get(0).getMaxAddressLineIndex(); i++) {
+//                        adress += adresses.get(0).getAddressLine(i);
+//                    }
+//
+//                }
+//                mMap.addMarker(new MarkerOptions().position(latLng).title(adress));
+//            }
+//        });
     }
 }

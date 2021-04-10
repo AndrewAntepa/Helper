@@ -2,6 +2,8 @@ package com.example.helper;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -24,9 +26,10 @@ public class MainActivity extends AppCompatActivity {
     FloatingActionButton save;
     EditText news;
     ImageView image;
-    Uri mUri;
-    private final int Pick = 1;
-    private static final int CODE = 100;
+
+    CamGal camGal;
+    FragmentManager fragmentManager;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,29 +41,35 @@ public class MainActivity extends AppCompatActivity {
         news = findViewById(R.id.news);
         image = findViewById(R.id.image);
         save = findViewById(R.id.save);
+        camGal = new CamGal();
+        fragmentManager = getSupportFragmentManager();
 
         photo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                intent.putExtra(MediaStore.EXTRA_OUTPUT, mUri);
-                startActivityForResult(intent, CODE);
-                //intent.setType("image/*");
-                //tartActivityForResult(intent, Pick);
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.conteiner, camGal);
+                fragmentTransaction.commit();
             }
         });
 
+
     }
 
-    @Override
+
+   /* @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == CODE && resultCode == RESULT_OK) {
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            image.setImageBitmap(imageBitmap);
         switch (requestCode) {
-            case CODE:
+            case Pick:
                 if (resultCode == RESULT_OK) {
                     try {
-                        mUri = data.getData();
-                        final InputStream imageStream = getContentResolver().openInputStream(mUri);
+                        final Uri imageUri = data.getData();
+                        final InputStream imageStream = getContentResolver().openInputStream(imageUri);
                         final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
                         image.setImageBitmap(selectedImage);
                     } catch (FileNotFoundException e) {
@@ -69,6 +78,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 break;
 
-        }
-    }
+        }*/
 }
+
+

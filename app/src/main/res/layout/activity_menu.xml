@@ -23,16 +23,6 @@
   <LinearLayout
       android:layout_width="match_parent"
       android:layout_height="wrap_content">
-    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-        android:layout_width="wrap_content"
-        android:layout_weight="1"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"
-        android:text="ЛЕНТА"
-        android:textSize="20dp"
-        android:gravity="center"
-        android:layout_height="wrap_content"
-        android:id="@+id/lentaButton"/>
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:layout_width="wrap_content"
@@ -42,6 +32,16 @@
         android:text="КАРТА"
         android:textSize="20dp"
         android:id="@+id/mapButton"
+        android:layout_height="wrap_content"/>
+
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_weight="1"
+        android:layout_marginRight="10dp"
+        android:layout_marginVertical="10dp"
+        android:gravity="center"
+        android:textSize="20dp"
+        android:id="@+id/balls"
         android:layout_height="wrap_content"/>
   </LinearLayout>
 </FrameLayout>

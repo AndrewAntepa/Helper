@@ -17,7 +17,6 @@ public class MyOpenHelper extends SQLiteOpenHelper {
     public static final String COLUMN_NAME = "spots";
     public static final String COLUMN_LAT = "lat";
     public static final String COLUMN_LON = "lon";
-    public static final String COLUMN_IMAGE = "image";
 
 
     @RequiresApi(api = Build.VERSION_CODES.P)
@@ -31,8 +30,7 @@ public class MyOpenHelper extends SQLiteOpenHelper {
                 + "( _id INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + COLUMN_NAME + " TEXT,"
                 + COLUMN_LAT + " REAL, "
-                + COLUMN_LON + " REAL, "
-                + COLUMN_IMAGE + "INTEGER);";
+                + COLUMN_LON + " REAL);";
         db.execSQL(query);
     }
 
