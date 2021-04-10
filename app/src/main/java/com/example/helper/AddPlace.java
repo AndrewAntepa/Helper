@@ -4,8 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.Manifest;
 import android.app.Dialog;
@@ -19,6 +17,7 @@ import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -26,11 +25,8 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -56,7 +52,7 @@ public class AddPlace extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_plays_add);
+        setContentView(R.layout.activity_place_add);
 
         locationListener = new LocationListener() {
             @Override
@@ -138,12 +134,15 @@ public class AddPlace extends AppCompatActivity {
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String s = news.getText().toString();
                 Intent back = new Intent(AddPlace.this, StartActivity.class);
                 if(location != null) {
-                    String id = dbRef.getKey();
-                    Place place = new Place(id, news.getText().toString(), location.getLatitude(), location.getLongitude());
-                    dbRef.push().setValue(place);
-                    startActivity(back);
+                    if (!TextUtils.isEmpty(s)) {
+                        String id = dbRef.getKey();
+                        Place place = new Place(id, s, location.getLatitude(), location.getLongitude());
+                        dbRef.push().setValue(place);
+                        startActivity(back);
+                    } else Toast.makeText(getApplicationContext(), "Заполните поле описания", Toast.LENGTH_SHORT).show();
                 }
             }
         });
