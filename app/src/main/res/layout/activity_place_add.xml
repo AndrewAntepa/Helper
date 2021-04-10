@@ -39,6 +39,7 @@
                     android:layout_margin="10dp"
                     android:gravity="center"
                     android:text="+ФОТО"
+                    android:textColor="@color/white"
                     android:id="@+id/photo"
                     android:textSize="20dp"
                     android:layout_height="wrap_content"/>
