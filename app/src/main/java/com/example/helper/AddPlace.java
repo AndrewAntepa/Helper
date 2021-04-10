@@ -46,11 +46,12 @@ public class AddPlace extends AppCompatActivity {
     private final int Pick = 1;
 
     DatabaseReference dbRef;
-    public static final String PLAYS = "plays";
+    public static final String PLAY = "play";
     LocationManager locationManager;
     Location location;
     LocationListener locationListener;
     private boolean granted = false;
+    double lat, lon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,12 +61,11 @@ public class AddPlace extends AppCompatActivity {
         locationListener = new LocationListener() {
             @Override
             public void onLocationChanged(@NonNull Location location) {
-
+                showLocation(location);
             }
         };
 
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-//        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000*10, 5, locationListener);
 
         place = findViewById(R.id.place);
         photo = findViewById(R.id.photo);
@@ -134,13 +134,17 @@ public class AddPlace extends AppCompatActivity {
         });
 
 
-        dbRef = FirebaseDatabase.getInstance().getReference(PLAYS);
+        dbRef = FirebaseDatabase.getInstance().getReference(PLAY);
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String id = dbRef.getKey();
-                Place place = new Place(id, news.getText().toString(), Double.parseDouble(String.valueOf(location.getLatitude())), Double.parseDouble(String.valueOf(location.getLongitude())));
-                dbRef.push().setValue(place);
+                Intent back = new Intent(AddPlace.this, StartActivity.class);
+                if(location != null) {
+                    String id = dbRef.getKey();
+                    Place place = new Place(id, news.getText().toString(), location.getLatitude(), location.getLongitude());
+                    dbRef.push().setValue(place);
+                    startActivity(back);
+                }
             }
         });
     }
@@ -182,15 +186,6 @@ public class AddPlace extends AppCompatActivity {
             }
         }
     }
-    //    @Override
-//    public void onDataChange(@NonNull DataSnapshot snapshot) {
-//
-//    }
-//
-//    @Override
-//    public void onCancelled(@NonNull DatabaseError error) {
-//
-//    }
 
     //TODO добавление фото через галлерею и камеру
     @Override
@@ -228,6 +223,25 @@ public class AddPlace extends AppCompatActivity {
         }
     }
 
+    private void showLocation(Location location){
+        if(location == null){
+            return;
+        }
+        if(location.getProvider().equals(LocationManager.NETWORK_PROVIDER)){
+            lat = location.getLatitude();
+            lon = location.getLongitude();
+        }
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(granted || checkPermission()) {
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000 * 10, 5, locationListener);
+            if (locationManager != null){
+                location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+            }
+        }
+    }
 }
 
