@@ -1,5 +1,6 @@
 package com.example.helper;
 
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
@@ -11,11 +12,15 @@ public class NewPlace extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
+        Intent clickNotify = new Intent(this, StartActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, clickNotify, PendingIntent.FLAG_UPDATE_CURRENT);
+
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         return super.onStartCommand(intent, flags, startId);
+
     }
 
     @Override
