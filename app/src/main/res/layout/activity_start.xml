@@ -45,4 +45,6 @@
         android:layout_height="wrap_content"/>
 
   </LinearLayout>
+
+  <!--android:enabled="false"-->
 </FrameLayout>

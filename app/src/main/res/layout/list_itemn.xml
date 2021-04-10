@@ -24,4 +24,13 @@
         android:layout_margin="10dp"
         android:id="@+id/picture"/>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="15sp"
+        android:text="Не выполнено"
+        android:id="@+id/status"
+        android:layout_gravity="end"
+        android:background="#F10000"/>
+
 </LinearLayout>

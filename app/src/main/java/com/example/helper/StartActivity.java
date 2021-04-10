@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -103,5 +104,17 @@ public class StartActivity extends AppCompatActivity {
 //            contentValues.put(MyOpenHelper.COLUMN_LON, plays.get(i).lon);
 //            sdb.insert(MyOpenHelper.TABLE_NAME, null, contentValues);
 //        }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Toast.makeText(this, "сработала onStart", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Toast.makeText(this, "сработала onRestart", Toast.LENGTH_SHORT).show();
     }
 }
