@@ -19,8 +19,6 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.firebase.installations.FirebaseInstallations;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -106,15 +104,20 @@ public class StartActivity extends AppCompatActivity {
 
         LinkedList<String> element = new LinkedList();
 
-        for (int i = 0; i < 1; i++) {
-            HashMap<String, Object> map = new HashMap<>();
-            map.put("name", "Иванов Иван");
-            map.put("description", str);
-            map.put("imageView", R.drawable.trash);
+        final LinkedList<String> names = new LinkedList<>();
+        names.add("Иванов Иван");
+        names.add("Ирина Смирнова");
+        names.add("Екатерина Дроздова");
 
-            map.put("name", "Ирина Дроздова");
-            map.put("description", "Это про невыносимо помогите достучаться до ТСЖ и починить дверь в подъезд и сделать ремонт внутри подъезда");
-            map.put("imageView", R.drawable.trash);
+        final LinkedList<String> descreption = new LinkedList<>();
+        descreption.add("Это про невыносимо помогите достучаться до ТСЖ и починить дверь в подъезд и сделать ремонт внутри подъезда");
+        descreption.add("Решила отдахнуть с семьей на байкале, но огромное количество мусора очень мешало. Помогите убрать мусор на байкале");
+        descreption.add("Давайте поможем пенсионерам");
+
+        for (int i = 0; i < 3; i++) {
+            HashMap<String, Object> map = new HashMap<>();
+            map.put("name", names.get(i));
+            map.put("descreption", descreption.get(i));
             //map.put("imageView", )
             linkedList.add(map);
         }

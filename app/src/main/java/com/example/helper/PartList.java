@@ -36,5 +36,7 @@ public class PartList extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+
     }
 }
