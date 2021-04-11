@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
@@ -29,7 +30,7 @@ public class StartActivity extends AppCompatActivity {
     SimpleAdapter simpleAdapter;
     SharedPreferences sharedPreferences;
     private static final String STATUS = "status";
-    int stat, count = 0;
+    int stat, count = 1;
     private static final String DESCRIPTION = "descrition";
     private static final String IMAGE = "imageView";
 
@@ -48,15 +49,10 @@ public class StartActivity extends AppCompatActivity {
         intentNew = new Intent(StartActivity.this, AddPlace.class);
 
         //TODO sharedPreferences
-        balls.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                sharedPreferences = getSharedPreferences("pref", 0);
-                SharedPreferences.Editor editor =sharedPreferences.edit();
-                editor.putInt("Status", count);
-                editor.commit();
-            }
-        });
+        sharedPreferences = getSharedPreferences("pref", 0);
+        SharedPreferences.Editor editor =sharedPreferences.edit();
+        editor.putInt("Status", count);
+        editor.commit();
 
 
         //TODO работа с листвью
@@ -104,32 +100,49 @@ public class StartActivity extends AppCompatActivity {
 
         LinkedList<String> element = new LinkedList();
 
-        for (int i = 0; i < element.size(); i++) {
+        for (int i = 0; i < 1; i++) {
             HashMap<String, Object> map = new HashMap<>();
             map.put("name", "Иванов Иван");
             map.put("description", str);
+            map.put("imageView", R.drawable.trash);
+
+            map.put("name", "Ирина Дроздова");
+            map.put("description", "Это про невыносимо помогите достучаться до ТСЖ и починить дверь в подъезд и сделать ремонт внутри подъезда");
             map.put("imageView", R.drawable.trash);
             //map.put("imageView", )
             linkedList.add(map);
         }
         simpleAdapter.notifyDataSetChanged();
+
+        //TODO работа с элементами listView
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(StartActivity.this, PartList.class);
+                //intent.putExtra("info", i);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
     protected void onStart() {
         super.onStart();
         int s = getIntent().getIntExtra(STATUS, 0);
-        //int c = sharedPreferences.getInt("Status", 0);
-        if (s != 0){
-            count++;
-            balls.setText(count);
+        int c = sharedPreferences.getInt("Status", -1);
+        if (c != -1) {
+            if (s != 0) {
+                count=c;
+                //count++;
+                balls.setText(String.valueOf(count));
+            }
         }
     }
 
     @Override
     protected void onRestart() {
         super.onRestart();
-        Toast.makeText(this, "сработала onRestart", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "сработала onRestart", Toast.LENGTH_SHORT).show();
 
     }
 }
