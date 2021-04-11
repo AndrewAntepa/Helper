@@ -2,9 +2,12 @@ package com.example.helper;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -33,6 +36,8 @@ public class StartActivity extends AppCompatActivity {
     int stat, count = 1;
     private static final String DESCRIPTION = "descrition";
     private static final String IMAGE = "imageView";
+    private static final String CHANNEL_ID = "101";
+
 
 
     LinkedList<HashMap<String, Object>> linkedList = new LinkedList<HashMap<String, Object>>();
@@ -41,6 +46,7 @@ public class StartActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
+        createNotificationChannel();
 
         mapButton = findViewById(R.id.mapButton);
         addButton = findViewById(R.id.addButton);
@@ -144,5 +150,17 @@ public class StartActivity extends AppCompatActivity {
         super.onRestart();
         //Toast.makeText(this, "сработала onRestart", Toast.LENGTH_SHORT).show();
 
+    }
+
+    private void createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = "firebaseNotifChanel";
+            String description = "This is a chanel to recieve FB notification";
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
+            channel.setDescription(description);
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
     }
 }

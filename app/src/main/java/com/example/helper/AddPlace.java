@@ -38,7 +38,7 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 
 public class AddPlace extends AppCompatActivity {
-    private static final String CHANNEL_ID = "101";
+
     private final int LOCATION_PERMISSION = 1001;
     Button place, photo, gallery, makePhoto, myPoint, drPoint;
     FloatingActionButton save;
@@ -61,7 +61,7 @@ public class AddPlace extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_place_add);
-        createNotificationChannel();
+
 
         locationListener = new LocationListener() {
             @Override
@@ -143,11 +143,6 @@ public class AddPlace extends AppCompatActivity {
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                Bitmap bitmap = image.getDrawingCache();
-                intent.putExtra("descrition", news.getText().toString());
-                intent.putExtra("imageView", String.valueOf(bitmap));
-
                 String s = news.getText().toString();
                 Intent back = new Intent(AddPlace.this, StartActivity.class);
                 if(location != null) {
@@ -257,16 +252,6 @@ public class AddPlace extends AppCompatActivity {
         }
     }
 
-    private void createNotificationChannel() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            CharSequence name = "firebaseNotifChanel";
-            String description = "This is a chanel to recieve FB notification";
-            int importance = NotificationManager.IMPORTANCE_DEFAULT;
-            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
-            channel.setDescription(description);
-            NotificationManager notificationManager = getSystemService(NotificationManager.class);
-            notificationManager.createNotificationChannel(channel);
-        }
-    }
+
 }
 
