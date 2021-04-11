@@ -7,6 +7,8 @@ import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
 import android.app.Dialog;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -15,23 +17,28 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.installations.FirebaseInstallations;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 
 public class AddPlace extends AppCompatActivity {
+    private static final String CHANNEL_ID = "101";
     private final int LOCATION_PERMISSION = 1001;
     Button place, photo, gallery, makePhoto, myPoint, drPoint;
     FloatingActionButton save;
@@ -54,7 +61,7 @@ public class AddPlace extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_place_add);
-
+        createNotificationChannel();
 
         locationListener = new LocationListener() {
             @Override
@@ -247,6 +254,18 @@ public class AddPlace extends AppCompatActivity {
             if (locationManager != null){
                 location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
             }
+        }
+    }
+
+    private void createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = "firebaseNotifChanel";
+            String description = "This is a chanel to recieve FB notification";
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
+            channel.setDescription(description);
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
         }
     }
 }
