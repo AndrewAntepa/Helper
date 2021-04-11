@@ -31,20 +31,20 @@ public class StartActivity extends AppCompatActivity {
     SimpleAdapter simpleAdapter;
     SharedPreferences sharedPreferences;
     private static final String STATUS = "status";
-    int stat, count = 1;
+    int stat, count;
     private static final String DESCRIPTION = "descrition";
     private static final String IMAGE = "imageView";
     private static final String CHANNEL_ID = "101";
 
 
 
-    LinkedList<HashMap<String, Object>> linkedList = new LinkedList<HashMap<String, Object>>();
+    LinkedList<HashMap<String, String>> linkedList = new LinkedList<HashMap<String, String>>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
-        createNotificationChannel();
+
 
         mapButton = findViewById(R.id.mapButton);
         addButton = findViewById(R.id.addButton);
@@ -93,12 +93,9 @@ public class StartActivity extends AppCompatActivity {
         });
 
         //String str = getIntent().getStringExtra(DESCRIPTION);
-        String str = "ПОМОГИТЕ УБРАТЬ МУСОР, ЭТО КАКОЙ ТО ТРЭШ";
-        String sss = getIntent().getStringExtra(IMAGE);
-        Bitmap bitmap = (Bitmap) getIntent().getParcelableExtra("BitmapImage");
 
-        String[] keyFrom = {"name", "description", "imageView"};
-        int[] idTo = {R.id.name, R.id.description, R.id.imageView};
+        String[] keyFrom = {"name", "description"};
+        int[] idTo = {R.id.name, R.id.description};
         simpleAdapter = new SimpleAdapter(this, linkedList, R.layout.list_itemn, keyFrom, idTo);
         list.setAdapter(simpleAdapter);
 
@@ -108,16 +105,15 @@ public class StartActivity extends AppCompatActivity {
         names.add("Иванов Иван");
         names.add("Ирина Смирнова");
         names.add("Екатерина Дроздова");
-
-        final LinkedList<String> descreption = new LinkedList<>();
-        descreption.add("Это про невыносимо помогите достучаться до ТСЖ и починить дверь в подъезд и сделать ремонт внутри подъезда");
-        descreption.add("Решила отдахнуть с семьей на байкале, но огромное количество мусора очень мешало. Помогите убрать мусор на байкале");
-        descreption.add("Давайте поможем пенсионерам");
+        final LinkedList<String> descreptions = new LinkedList<>();
+        descreptions.add("Это про невыносимо помогите достучаться до ТСЖ и починить дверь в подъезд и сделать ремонт внутри подъезда");
+        descreptions.add("Решила отдахнуть с семьей на байкале, но огромное количество мусора очень мешало. Помогите убрать мусор на байкале");
+        descreptions.add("Давайте поможем пенсионерам");
 
         for (int i = 0; i < 3; i++) {
-            HashMap<String, Object> map = new HashMap<>();
+            HashMap<String, String> map = new HashMap<>();
             map.put("name", names.get(i));
-            map.put("descreption", descreption.get(i));
+            map.put("description", descreptions.get(i));
             //map.put("imageView", )
             linkedList.add(map);
         }
@@ -137,13 +133,15 @@ public class StartActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        createNotificationChannel();
         int s = getIntent().getIntExtra(STATUS, 0);
         int c = sharedPreferences.getInt("Status", -1);
         if (c != -1) {
+            balls.setText(String.valueOf(c));
             if (s != 0) {
-                count=c;
-                //count++;
+                count = c + 1;
                 balls.setText(String.valueOf(count));
+                count++;
             }
         }
     }
@@ -151,6 +149,7 @@ public class StartActivity extends AppCompatActivity {
     @Override
     protected void onRestart() {
         super.onRestart();
+        createNotificationChannel();
         //Toast.makeText(this, "сработала onRestart", Toast.LENGTH_SHORT).show();
 
     }
