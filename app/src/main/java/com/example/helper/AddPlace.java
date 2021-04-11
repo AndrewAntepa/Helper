@@ -40,6 +40,7 @@ public class AddPlace extends AppCompatActivity {
     ImageView image;
     private static final int CODE = 100;
     private final int Pick = 1;
+    Intent intent;
 
     DatabaseReference dbRef;
     public static final String PLACE = "place";
@@ -53,6 +54,7 @@ public class AddPlace extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_place_add);
+
 
         locationListener = new LocationListener() {
             @Override
@@ -134,6 +136,11 @@ public class AddPlace extends AppCompatActivity {
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                Bitmap bitmap = image.getDrawingCache();
+                intent.putExtra("descrition", news.getText().toString());
+                intent.putExtra("imageView", String.valueOf(bitmap));
+
                 String s = news.getText().toString();
                 Intent back = new Intent(AddPlace.this, StartActivity.class);
                 if(location != null) {

@@ -26,19 +26,12 @@ public class PartList extends AppCompatActivity {
         execute = findViewById(R.id.execute);
         imageView = findViewById(R.id.imageView);
 
-
-        execute.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
         execute.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(PartList.this, StartActivity.class);
+                Intent intent;
                 stat = 1;
-
+                intent = new Intent(PartList.this, StartActivity.class);
                 intent.putExtra("status", stat);
             }
         });
