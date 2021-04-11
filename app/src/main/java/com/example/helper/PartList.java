@@ -33,6 +33,7 @@ public class PartList extends AppCompatActivity {
                 stat = 1;
                 intent = new Intent(PartList.this, StartActivity.class);
                 intent.putExtra("status", stat);
+                startActivity(intent);
             }
         });
     }
